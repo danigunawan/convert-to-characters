@@ -19,3 +19,4 @@ googletrans = "*"
 "sqlalchemy-utils" = "*"
 "e1839a8" = {path = ".", editable = true}
 pymysql = "*"
+gunicorn = "*"
