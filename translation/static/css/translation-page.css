@@ -1,0 +1,17 @@
+body {
+  padding-top: 70px;
+}
+.remove-right-padding {
+  padding-right: 0px !important;
+}
+.block-spacing {
+  padding-bottom: 15px;
+}
+textarea {
+  max-width: 100%;
+  min-width: 100%;
+  max-height: 500px;
+}
+label {
+  font-size: 20px;
+}

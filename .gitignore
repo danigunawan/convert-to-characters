@@ -1,0 +1,6 @@
+.DS_Store
+*.pyc
+.envrc
+.python-version
+config.py
+node_modules

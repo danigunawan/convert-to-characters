@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1>My Translations</h1>
+
+<table class='table'>
+  <thead>
+    <th>Original Text</th>
+    <th>Original Language</th>
+    <th>Translated Text</th>
+    <th>Translation Language</th>
+    <th>Shortcut Keyword</th>
+  </thead>
+  <tbody>
+    {% for translation in translations %}
+      <tr>
+        <td>{{ translation.original_text }}</td>
+        <td>{{ translation.original_language }}</td>
+        <td>{{ translation.translated_text }}</td>
+        <td>{{ translation.translated_language }}</td>
+        <td>{{ translation.shortcut }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
