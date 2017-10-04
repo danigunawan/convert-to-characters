@@ -14,11 +14,14 @@
 {% endmacro %}
 
 {% macro build_textarea(labelText, textAreaId, textAreaHeight, translateButton, readOnly) %}
-  <div class=col-md-4>
-    <label for={{textAreaId}}>{{labelText}}</label><br/>
-    <textarea id={{textAreaId}} cols=50 rows={{textAreaHeight}} {% if readOnly %} readonly {% endif %}}></textarea><br/>
-    {% if translateButton == True %}
+  <label for={{textAreaId}}>{{labelText}}</label><br/>
+  <textarea id={{textAreaId}} cols=50 rows={{textAreaHeight}} {% if readOnly %} readonly {% endif %}}></textarea><br/>
+  {% if translateButton == True %}
+    <div class=col-md-6>
+      <button type=button id=listen class="btn btn-primary btn-block"><i class="fa fa-microphone"></i> Speak</button>
+    </div>
+    <div class=col-md-6>
       <button type=button id=translate-given class="btn btn-primary btn-block">Translate</button>
-    {% endif %}
-  </div>
+    </div>
+  {% endif %}
 {% endmacro %}

@@ -45,6 +45,10 @@ $(document).ready(function(){
     $("#translator").on("change", function(event){
       currentApi = event.target.value
     })
+    $("#input").on("keyup", function(event){
+      $("#translate-given").prop("disabled", ($("#input").val().length == 0))
+    })
+
 
     function trimAndLowerCaseText(text){
       return $.trim(text).toLowerCase()
@@ -56,7 +60,7 @@ $(document).ready(function(){
     }
 
     function enableButtons(){
-      $("#listen").text("Listen")
+      $("#listen").html("<i class='fa fa-microphone'></i> Speak")
       $("#translate-given").text("Translate")
       $("#listen, #translate-given").removeClass("btn-danger").addClass("btn-primary")
       $("#listen, #translate-given").prop("disabled", false)
@@ -150,12 +154,13 @@ $(document).ready(function(){
         },
         dataType: "json",
         beforeSend(){
-          $("#listen, #translate-given").text("Translating")
+          $("#translate-given").html("<i class='fa fa-circle-o-notch fa-spin'></i> Translating...")
         },
         success: function(data){
           let callbackParameters = onlyEnableButtons ? callEnableButtons : callRecognizeWithAnnyang
           if($.trim(data.translated_text).length){
-            $("#untranslated-input").val(data.original_text)
+            // $("#untranslated-input").val(data.original_text)
+            $("#input").val(data.original_text)
             $("#translated-input").val(data.translated_text)
 
             setRecentTranslation(data.original_text, data.translated_text, data.source_language, data.destination_language)
@@ -193,7 +198,7 @@ $(document).ready(function(){
         })
 
         annyang.addCallback("start", function(){
-          $("#listen, #translate-given").text("Currently Listening")
+          $("#listen").html("<i class='fa fa-rss'></i> Speak now...")
           disableButtons()
         })
 
@@ -209,9 +214,12 @@ $(document).ready(function(){
         responsiveVoice.speak("Annyang Recognition API not started", "US English Female", callRecognizeWithAnnyang)
       }
   }
+
   $(function(){
     if($("#translation-area").length){
-      recognizeWithAnnyang()
+      // recognizeWithAnnyang()
+      $("#translate-given").prop("disabled", true)
     }
+
   })
 })
