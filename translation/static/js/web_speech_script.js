@@ -11,6 +11,7 @@ $(document).ready(function(){
       "given": translateInputText,
       // "save :shortcut": {"regexp": /^save (\w+)$/, "callback": saveTranslation},
       "recognize :language": {"regexp": /^recognize (\w+)$/, "callback": setRecognizedLanguage},
+      "recognise :language": {"regexp": /^recognise (\w+)$/, "callback": setRecognizedLanguage},
       "translate :language": {"regexp": /^translate (\w+)$/, "callback": setTranslationLanguage},
       "translator :translator": {"regexp": /^translator (\w+)$/, "callback": setTranslator}
     }
@@ -157,7 +158,7 @@ $(document).ready(function(){
           $("#translate-given").html("<i class='fa fa-circle-o-notch fa-spin'></i> Translating...")
         },
         success: function(data){
-          let callbackParameters = onlyEnableButtons ? callEnableButtons : callRecognizeWithAnnyang
+          let callbackParameters = onlyEnableButtons ? callEnableButtons : null
           if($.trim(data.translated_text).length){
             // $("#untranslated-input").val(data.original_text)
             $("#input").val(data.original_text)

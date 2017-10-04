@@ -10352,6 +10352,7 @@ $(document).ready(function () {
     "given": translateInputText,
     // "save :shortcut": {"regexp": /^save (\w+)$/, "callback": saveTranslation},
     "recognize :language": { "regexp": /^recognize (\w+)$/, "callback": setRecognizedLanguage },
+    "recognise :language": { "regexp": /^recognise (\w+)$/, "callback": setRecognizedLanguage },
     "translate :language": { "regexp": /^translate (\w+)$/, "callback": setTranslationLanguage },
     "translator :translator": { "regexp": /^translator (\w+)$/, "callback": setTranslator }
   };
@@ -10498,9 +10499,10 @@ $(document).ready(function () {
       },
 
       success: function success(data) {
-        var callbackParameters = onlyEnableButtons ? callEnableButtons : callRecognizeWithAnnyang;
+        var callbackParameters = onlyEnableButtons ? callEnableButtons : null;
         if ($.trim(data.translated_text).length) {
-          $("#untranslated-input").val(data.original_text);
+          // $("#untranslated-input").val(data.original_text)
+          $("#input").val(data.original_text);
           $("#translated-input").val(data.translated_text);
 
           setRecentTranslation(data.original_text, data.translated_text, data.source_language, data.destination_language);
