@@ -1,0 +1,24 @@
+{% macro build_select(defaultValue, labelText, selectId, items) %}
+<div class=form-group>
+  <label for={{selectId}}>{{labelText}}</label>
+  <select class=form-control id={{selectId}}>
+    {% for key, value in items %}
+      {% if key == defaultValue %}
+        <option value={{value}} selected>{{key}}</option>
+      {% else %}
+        <option value={{value}}>{{key}}</option>
+      {% endif %}
+    {% endfor %}
+  </select>
+</div>
+{% endmacro %}
+
+{% macro build_textarea(labelText, textAreaId, textAreaHeight, translateButton, readOnly) %}
+  <div class=col-md-4>
+    <label for={{textAreaId}}>{{labelText}}</label><br/>
+    <textarea id={{textAreaId}} cols=50 rows={{textAreaHeight}} {% if readOnly %} readonly {% endif %}}></textarea><br/>
+    {% if translateButton == True %}
+      <button type=button id=translate-given class="btn btn-primary btn-block">Translate</button>
+    {% endif %}
+  </div>
+{% endmacro %}

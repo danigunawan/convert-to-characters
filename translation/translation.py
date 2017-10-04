@@ -13,7 +13,7 @@ app = create_app()
 def index():
     languages = [("English", "en"), ("Filipino", "tl"), ("Japanese", "ja")]
     recognitions = [("English", "en-US"), ("Filipino", "fil-PH"), ("Japanese", "ja")]
-    translators = [("Google Translate", "google_translate"), ("Yandex Translate", "yandex_translate")]
+    translators = [("Google", "google_translate"), ("Yandex", "yandex_translate")]
 
     return render_template("index.html", languages=OrderedDict(languages), recognitions=OrderedDict(recognitions), translators=OrderedDict(translators))
 

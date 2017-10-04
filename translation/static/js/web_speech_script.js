@@ -23,19 +23,43 @@ $(document).ready(function(){
       shortcut: ""
     }
 
-    var parameters = {
+    var callRecognizeWithAnnyang = {
       onend: recognizeWithAnnyang
+    }
+
+    var callEnableButtons = {
+      onend: enableButtons
     }
 
     var lowerCaseLanguages = ["english", "filipino", "japanese"]
     var lowerCaseTranslators = ["google", "yandex"]
 
-    $("#listen").on("click", function(){
-      recognizeWithAnnyang()
+    $("#listen").on("click", recognizeWithAnnyang)
+    $("#translate-given").on("click", translateInputText)
+    $("#recognition-language").on("change", function(event){
+      recognizedLanguage = event.target.value
+    })
+    $("#translation-language").on("change", function(event){
+      chosenLanguage = event.target.value
+    })
+    $("#translator").on("change", function(event){
+      currentApi = event.target.value
     })
 
     function trimAndLowerCaseText(text){
       return $.trim(text).toLowerCase()
+    }
+
+    function disableButtons(){
+      $("#listen, #translate-given").removeClass("btn-primary").addClass("btn-danger")
+      $("#listen, #translate-given").prop("disabled", true)
+    }
+
+    function enableButtons(){
+      $("#listen").text("Listen")
+      $("#translate-given").text("Translate")
+      $("#listen, #translate-given").removeClass("btn-danger").addClass("btn-primary")
+      $("#listen, #translate-given").prop("disabled", false)
     }
 
     function saveTranslation(shortcut){
@@ -46,17 +70,18 @@ $(document).ready(function(){
         data: recentTranslation,
         dataType: "json",
         success: function(data){
-          responsiveVoice.speak("Saved the translation", "US English Female", parameters)
+          responsiveVoice.speak("Saved the translation", "US English Female", callRecognizeWithAnnyang)
         }
       })
     }
 
     function translateInputText(){
       let trimmedInput = trimAndLowerCaseText($("#input").val())
+      disableButtons()
       if(trimmedInput){
-        dictateTranslation(trimmedInput, chosenLanguage, currentApi)
+        dictateTranslation(trimmedInput, chosenLanguage, currentApi, true)
       }else{
-        responsiveVoice.speak("No input text to translate.", "US English Female", parameters)
+        responsiveVoice.speak("No input text to translate.", "US English Female", callEnableButtons)
       }
     }
 
@@ -70,10 +95,10 @@ $(document).ready(function(){
           new_value = "ja"
         }
         recognizedLanguage = new_value
-        $("label[for='recognition-language']").text("Recognition Language: " + trimmedLanguage)
-        responsiveVoice.speak(("Recognition language set to " + trimmedLanguage), "US English Female", parameters)
+        $("#recognition-language").val(new_value)
+        responsiveVoice.speak(("Recognition language set to " + trimmedLanguage), "US English Female", callRecognizeWithAnnyang)
       }else{
-        responsiveVoice.speak("Language not supported.", "US English Female", parameters)
+        responsiveVoice.speak("Language not supported.", "US English Female", callRecognizeWithAnnyang)
       }
     }
 
@@ -87,10 +112,10 @@ $(document).ready(function(){
           new_value = "ja"
         }
         chosenLanguage = new_value
-        $("label[for='translation-language']").text("Translation Language: " + trimmedLanguage)
-        responsiveVoice.speak(("Translation language set to " + trimmedLanguage), "US English Female", parameters)
+        $("#translation-language").val(new_value)
+        responsiveVoice.speak(("Translation language set to " + trimmedLanguage), "US English Female", callRecognizeWithAnnyang)
       }else{
-        responsiveVoice.speak("Language not supported.", "US English Female", parameters)
+        responsiveVoice.speak("Language not supported.", "US English Female", callRecognizeWithAnnyang)
       }
     }
 
@@ -99,10 +124,10 @@ $(document).ready(function(){
       if($.inArray(trimmedTranslator, lowerCaseTranslators) !== -1){
         let new_value = trimmedTranslator === "google" ? "google_translate" : "yandex_translate"
         currentApi = $("#translator").val() === "google_translate" ? "google_translate" : "yandex_translate"
-        $("label[for='translator']").text("Translator: " + trimmedTranslator)
-        responsiveVoice.speak(("Translator set to " + trimmedTranslator), "US English Female", parameters)
+        $("#translator").val(new_value)
+        responsiveVoice.speak(("Translator set to " + trimmedTranslator), "US English Female", callRecognizeWithAnnyang)
       }else{
-        responsiveVoice.speak("Translator not supported.", "US English Female", parameters)
+        responsiveVoice.speak("Translator not supported.", "US English Female", callRecognizeWithAnnyang)
       }
     }
 
@@ -113,7 +138,7 @@ $(document).ready(function(){
       recentTranslation["translatedLanguage"] = translatedLanguage
     }
 
-    function dictateTranslation(text, selectedLanguage, api){
+    function dictateTranslation(text, selectedLanguage, api, onlyEnableButtons){
       $.ajax({
         type: "POST",
         url: "/translate",
@@ -124,7 +149,11 @@ $(document).ready(function(){
           api: api
         },
         dataType: "json",
+        beforeSend(){
+          $("#listen, #translate-given").text("Translating")
+        },
         success: function(data){
+          let callbackParameters = onlyEnableButtons ? callEnableButtons : callRecognizeWithAnnyang
           if($.trim(data.translated_text).length){
             $("#untranslated-input").val(data.original_text)
             $("#translated-input").val(data.translated_text)
@@ -139,9 +168,9 @@ $(document).ready(function(){
               voiceLanguage = "US English Female"
             }
 
-            responsiveVoice.speak(data.translated_text, voiceLanguage, parameters)
+            responsiveVoice.speak(data.translated_text, voiceLanguage, callbackParameters)
           }else{
-            responsiveVoice.speak("No input provided", "US English Female", parameters)
+            responsiveVoice.speak("No input provided", "US English Female", callbackParameters)
             $("#untranslated-input").val("")
             $("#translated-input").val("")
           }
@@ -164,15 +193,12 @@ $(document).ready(function(){
         })
 
         annyang.addCallback("start", function(){
-          $("#listen").text("Currently Listening")
-          $("#listen").toggleClass("btn-primary btn-danger")
-          $("#listen").prop("disabled", true)
+          $("#listen, #translate-given").text("Currently Listening")
+          disableButtons()
         })
 
         annyang.addCallback("end", function(){
-          $("#listen").text("Listen")
-          $("#listen").toggleClass("btn-primary btn-danger")
-          $("#listen").prop("disabled", false)
+          enableButtons()
         })
 
         annyang.setLanguage(recognizedLanguage)
@@ -180,7 +206,7 @@ $(document).ready(function(){
         annyang.start({autoRestart: false, continuous: false})
 
       }else{
-        responsiveVoice.speak("Annyang Recognition API not started", "US English Female", parameters)
+        responsiveVoice.speak("Annyang Recognition API not started", "US English Female", callRecognizeWithAnnyang)
       }
   }
   $(function(){

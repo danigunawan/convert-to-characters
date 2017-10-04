@@ -1,37 +1,22 @@
 {% extends "layout.html" %}
+
 {% block content %}
 <div id=translation-area>
   <div class=row>
-    <div class=col-md-4>
-      <p class=hints>
-        <label for=input>Input Text to Translate</label><br/>
-        <textarea id=input cols=50 rows=20></textarea><br/>
-      </p>
-    </div>
-    <div class=col-md-4>
-      <label for=untranslated-input>Received Input</label><br/>
-      <textarea id=untranslated-input readonly cols=50 rows=20></textarea><br/>
-    </div>
-    <div class=col-md-4>
-      <label for=translated-input>Translated Input</label><br/>
-      <textarea id=translated-input readonly rows=20></textarea>
-    </div>
+    {{ macros.build_textarea("Input Text to Translate", "input", 18, True, False) }}
+    {{ macros.build_textarea("Received Input", "untranslated-input", 20, False, True) }}
+    {{ macros.build_textarea("Translated Input", "translated-input", 20, False, True) }}
   </div>
 </div>
 {% endblock %}
+
 {% block sidebar %}
 <div class=row>
   <div class="col-md-12 remove-right-padding block-spacing">
-      <label for=recognition-language>Recognition Language: English</label>
-      <br/><small>Supported Languages: {{ ', '.join(recognitions.keys()) }}</small><br/>
-      <label for=translation-language>Translation Language: English</label>
-      <br/><small>Supported Languages: {{ ', '.join(languages.keys()) }}</small><br/>
-      <label for=translator>Translator: Google Translate</label>
-      <br/><small>Translators: {{ ', '.join(translators.keys()) }}</small><br/>
-      <input type='hidden' id='recognition-language' value={{ recognitions['English'] }}>
-      <input type='hidden' id='translation-language' value={{ languages['English'] }}>
-      <input type='hidden' id='translator' value={{ translators['Google Translate'] }}><br/>
-      <button type=button id=listen class='btn btn-primary btn-block'>Listening</button>
+      {{ macros.build_select("English", "Recognition Language", "recognition-language", recognitions.items()) }}
+      {{ macros.build_select("English", "Translation Language", "translation-language", languages.items()) }}
+      {{ macros.build_select("Google", "Translator", "translator", translators.items()) }}
+      <button type=button id=listen class="btn btn-primary btn-block">Listening</button>
   </div>
 </div>
 {% endblock %}
