@@ -1,5 +1,5 @@
 from flask import Flask
-from models import db, migrate
+# from models import db, migrate
 
 def create_app(name=None):
     """
@@ -8,8 +8,8 @@ def create_app(name=None):
 
     app = Flask(name or __name__) # create the application instance
     app.config.from_object('config.DevelopmentConfig') # load config from this file i.e. translation.py
-    db.init_app(app)
-    migrate.init_app(app, db)
+    # db.init_app(app)
+    # migrate.init_app(app, db)
     # Bootstrap(app)
 
     # Load default config and override config from an environment variable

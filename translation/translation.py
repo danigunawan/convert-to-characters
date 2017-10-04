@@ -4,7 +4,7 @@ from googletrans import Translator
 from yandex_translate import YandexTranslate
 from collections import OrderedDict
 from setup_app import create_app
-from models import *
+# from models import *
 import pdb
 
 app = create_app()
@@ -28,7 +28,8 @@ def translate():
     }
 
     if translation["original_text"]:
-        matching_record = Translation.check_for_matches(translation["original_text"])
+        # matching_record = Translation.check_for_matches(translation["original_text"])
+        matching_record = None
         if matching_record is None:
             translation["translated_text"] = get_translated_text_from_api(translation["api"], translation["original_text"], translation["destination_language"])
         else:
@@ -42,17 +43,18 @@ def translate():
 
 @app.route("/save_translation", methods=["POST"])
 def save_translation():
-    translation = Translation(request.form["original_text"], request.form["original_language"],
-                              request.form["translated_text"], request.form["translated_language"],
-                              request.form["shortcut"])
-    db.session.add(translation)
-    db.session.commit()
+    # translation = Translation(request.form["original_text"], request.form["original_language"],
+    #                           request.form["translated_text"], request.form["translated_language"],
+    #                           request.form["shortcut"])
+    # db.session.add(translation)
+    # db.session.commit()
     return jsonify({ "success": True })
 
 @app.route("/show_translations")
 def show_translations():
-    translations = Translation.query.all()
-    return render_template("translations.html", translations=translations)
+    # translations = Translation.query.all()
+    # return render_template("translations.html", translations=translations)
+    return jsonify({"success": True})
 
 @app.context_processor
 def override_url_for():

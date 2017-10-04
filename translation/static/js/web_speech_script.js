@@ -9,7 +9,7 @@ $(document).ready(function(){
     var recognizedLanguage = $("#recognition-language").val()
     var commands = {
       "given": translateInputText,
-      "save :shortcut": {"regexp": /^save (\w+)$/, "callback": saveTranslation},
+      // "save :shortcut": {"regexp": /^save (\w+)$/, "callback": saveTranslation},
       "recognize :language": {"regexp": /^recognize (\w+)$/, "callback": setRecognizedLanguage},
       "translate :language": {"regexp": /^translate (\w+)$/, "callback": setTranslationLanguage},
       "translator :translator": {"regexp": /^translator (\w+)$/, "callback": setTranslator}
