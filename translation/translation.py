@@ -5,9 +5,11 @@ from yandex_translate import YandexTranslate
 from collections import OrderedDict
 from setup_app import create_app
 # from models import *
+from flask_socketio import SocketIO, emit, join_room
 import pdb
 
 app = create_app()
+socketio = SocketIO(app)
 
 @app.route("/")
 def index():
@@ -56,6 +58,18 @@ def show_translations():
     # return render_template("translations.html", translations=translations)
     return jsonify({"success": True})
 
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+@socketio.on("message", namespace="/chat")
+def chat_message(message):
+    emit('message', {'data': message['data']}, broadcast = True)
+
+@socketio.on('connect', namespace='/chat')
+def test_connect():
+    emit('my response', {'data': 'Connected', 'count': 0})
+
 @app.context_processor
 def override_url_for():
     return dict(url_for=dated_url_for)
@@ -78,4 +92,5 @@ def get_translated_text_from_api(api, original_text, destination_language):
         return translator.translate(original_text, destination_language)["text"][0]
 
 if __name__ == "__main__":
-    app.run()
+    # app.run()
+    socketio.run(app)

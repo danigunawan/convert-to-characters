@@ -160,8 +160,8 @@ $(document).ready(function(){
         success: function(data){
           let callbackParameters = onlyEnableButtons ? callEnableButtons : null
           if($.trim(data.translated_text).length){
-            // $("#untranslated-input").val(data.original_text)
-            $("#input").val(data.original_text)
+            $("#untranslated-input").val(data.original_text)
+            $("#input").val(data.translated_text)
             $("#translated-input").val(data.translated_text)
 
             setRecentTranslation(data.original_text, data.translated_text, data.source_language, data.destination_language)

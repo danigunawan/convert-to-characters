@@ -24,4 +24,6 @@ translation/static/js/lib/jquery-3.2.1.js
 translation/static/js/lib/responsive_voice.js
 translation/templates/index.html
 translation/templates/layout.html
+translation/templates/login.html
+translation/templates/macros.jinja
 translation/templates/translations.html
