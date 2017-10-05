@@ -19,6 +19,6 @@ googletrans = "*"
 "sqlalchemy-utils" = "*"
 "e1839a8" = {path = ".", editable = true}
 pymysql = "*"
-gunicorn = "==18"
 "flask-socketio" = "==2.8.5"
 eventlet = "*"
+gunicorn = "*"
