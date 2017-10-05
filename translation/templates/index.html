@@ -32,7 +32,7 @@
             });
 
             $('#input').keyup(function(e){
-                if(e.keyCode == 13)
+                if(e.keyCode == 13 && $(this).val().length > 0)
                 {
                     sendMessage();
                 }
@@ -69,7 +69,7 @@
         </span>
         <input type="text" class="form-control" placeholder="Enter Message" id="input" autofocus/>
         <span class="input-group-btn">
-            <button class="btn btn-info" type="button" id="sendMessage">SEND <span class="glyphicon glyphicon-send"></span></button>
+            <button class="btn btn-info" type="button" id="sendMessage" disabled="true">SEND <span class="glyphicon glyphicon-send"></span></button>
         </span>
       </div>
     </div>

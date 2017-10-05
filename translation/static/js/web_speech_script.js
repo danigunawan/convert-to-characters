@@ -47,7 +47,7 @@ $(document).ready(function(){
       currentApi = event.target.value
     })
     $("#input").on("keyup", function(event){
-      $("#translate-given").prop("disabled", ($("#input").val().length == 0))
+      $("#translate-given, #sendMessage").prop("disabled", ($("#input").val().length == 0))
     })
 
 
