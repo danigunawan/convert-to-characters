@@ -1,7 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
 var ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: [
@@ -50,9 +49,6 @@ module.exports = {
     new webpack.ProvidePlugin({       // inject es5 modules as global variables throughout the project
       $: 'jquery',
       jQuery: 'jquery',
-    }),
-    new HtmlWebpackPlugin({
-      favicon: 'translation/static/css/favicon.png'
     })
   ]
 }

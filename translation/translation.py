@@ -1,5 +1,5 @@
 import os
-from flask import request, render_template, url_for, jsonify
+from flask import request, render_template, url_for, jsonify, send_from_directory
 from googletrans import Translator
 from yandex_translate import YandexTranslate
 from collections import OrderedDict
@@ -61,6 +61,10 @@ def show_translations():
 @app.route('/login')
 def login():
     return render_template('login.html')
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static', 'css'), 'favicon.ico')
 
 @socketio.on("message", namespace="/chat")
 def chat_message(message):

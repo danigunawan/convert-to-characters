@@ -5,6 +5,7 @@
 <script>
     var channel = "/chat";
     var socket = io.connect('http://' + document.domain + ':' + location.port + channel);
+    var counter = 0;
     // var socket = io.connect('https://' + document.domain + ':' + location.port + channel, {secure: true}); // production
 
     socket.on('connect', function() {
@@ -18,8 +19,21 @@
     function refreshMessages(m) {
       window.messagewindow = m
       message = m["data"]
-        $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div class="media-body">'
-            + message.message + '<br/><small class="text-muted">' + message.author + ' | ' + message.createDate + '</small><hr/></div></div></div></li>');
+      let untranslatedMessageLink = message.untranslatedMessage.length > 0 ? `<a href="#post-${counter}" data-toggle="collapse">View Untranslated Message</a><br/>
+      <div id="post-${counter}" class="collapse">${message.untranslatedMessage}</div><br/>` : ""
+
+      $(".media-list").append(`
+        <li class="media">
+          <div class="media-body">
+            <div class="media">
+              <div class="media-body">
+                ${message.message}<br/>${untranslatedMessageLink}
+                <small class="text-muted">${message.author} | ${message.createDate}</small>
+                <hr/>
+              </div>
+            </div>
+          </div>
+        </li>`);
     }
 
     $(function(){
@@ -32,7 +46,7 @@
             });
 
             $('#input').keyup(function(e){
-                if(e.keyCode == 13)
+                if(e.keyCode == 13 && ($.trim(e.target.value).length > 0))
                 {
                     sendMessage();
                 }
@@ -40,13 +54,16 @@
         }
 
         function sendMessage() {
-            $container = $('.media-list');
+            $container = $(".media-list");
             $container[0].scrollTop = $container[0].scrollHeight;
             var message = $("#input").val();
+            var untranslatedMessage = $.trim($("#input").val()) == $.trim($("#translated-input").val()) ? $("#untranslated-input").val() : ""
             var author = $.cookie("realtime-chat-nickname");
-            socket.emit('message', {data: {message: message, author: author, createDate: moment().format()}});
+            socket.emit('message', {data: {message: message, untranslatedMessage: untranslatedMessage, author: author, createDate: moment().format()}});
             $("#input").val("");
             $container.animate({ scrollTop: $container[0].scrollHeight }, "slow");
+            counter+=1;
+            $("#translate-given, #sendMessage").prop("disabled", true)
         }
     })
 </script>

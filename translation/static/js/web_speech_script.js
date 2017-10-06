@@ -1,6 +1,5 @@
 require("../js/lib/annyang.js")
 require("../css/translation-page.css")
-require("../css/favicon.png")
 
 $(document).ready(function(){
     var output = ""
@@ -47,7 +46,7 @@ $(document).ready(function(){
       currentApi = event.target.value
     })
     $("#input").on("keyup", function(event){
-      $("#translate-given").prop("disabled", ($("#input").val().length == 0))
+      $("#translate-given, #sendMessage").prop("disabled", ($.trim($("#input").val()).length == 0))
     })
 
 
@@ -163,6 +162,7 @@ $(document).ready(function(){
             $("#untranslated-input").val(data.original_text)
             $("#input").val(data.translated_text)
             $("#translated-input").val(data.translated_text)
+            $("#sendMessage").prop("disabled", ($.trim($("#input").val()).length == 0))
 
             setRecentTranslation(data.original_text, data.translated_text, data.source_language, data.destination_language)
 
@@ -219,7 +219,7 @@ $(document).ready(function(){
   $(function(){
     if($("#translation-area").length){
       // recognizeWithAnnyang()
-      $("#translate-given").prop("disabled", true)
+      $("#translate-given, #sendMessage").prop("disabled", true)
     }
 
   })

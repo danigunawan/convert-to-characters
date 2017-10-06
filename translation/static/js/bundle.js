@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 30);
+/******/ 	return __webpack_require__(__webpack_require__.s = 29);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10341,7 +10341,6 @@ module.exports = "data:application/vnd.ms-fontobject;base64,n04AAEFNAAACAAIABAAA
 
 __webpack_require__(4);
 __webpack_require__(21);
-__webpack_require__(29);
 
 $(document).ready(function () {
   var output = "";
@@ -10388,7 +10387,7 @@ $(document).ready(function () {
     currentApi = event.target.value;
   });
   $("#input").on("keyup", function (event) {
-    $("#translate-given").prop("disabled", $("#input").val().length == 0);
+    $("#translate-given, #sendMessage").prop("disabled", $.trim($("#input").val()).length == 0);
   });
 
   function trimAndLowerCaseText(text) {
@@ -10504,6 +10503,7 @@ $(document).ready(function () {
           $("#untranslated-input").val(data.original_text);
           $("#input").val(data.translated_text);
           $("#translated-input").val(data.translated_text);
+          $("#sendMessage").prop("disabled", $.trim($("#input").val()).length == 0);
 
           setRecentTranslation(data.original_text, data.translated_text, data.source_language, data.destination_language);
 
@@ -10559,7 +10559,7 @@ $(document).ready(function () {
   $(function () {
     if ($("#translation-area").length) {
       // recognizeWithAnnyang()
-      $("#translate-given").prop("disabled", true);
+      $("#translate-given, #sendMessage").prop("disabled", true);
     }
   });
 });
@@ -13295,8 +13295,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../css-loader/index.js!../resolve-url-loader/index.js!../sass-loader/lib/loader.js?sourceMap!./lib/bootstrap.styles.loader.js?{\"bootstrapVersion\":3,\"useCustomIconFontPath\":false,\"extractStyles\":false,\"styleLoaders\":[\"style\",\"css\",\"sass\"],\"styles\":[\"mixins\",\"normalize\",\"print\",\"glyphicons\",\"scaffolding\",\"type\",\"code\",\"grid\",\"tables\",\"forms\",\"buttons\",\"component-animations\",\"dropdowns\",\"button-groups\",\"input-groups\",\"navs\",\"navbar\",\"breadcrumbs\",\"pagination\",\"pager\",\"labels\",\"badges\",\"jumbotron\",\"thumbnails\",\"alerts\",\"progress-bars\",\"media\",\"list-group\",\"panels\",\"wells\",\"responsive-embed\",\"close\",\"modals\",\"tooltip\",\"popovers\",\"carousel\",\"utilities\",\"responsive-utilities\"],\"scripts\":[\"transition\",\"alert\",\"button\",\"carousel\",\"collapse\",\"dropdown\",\"modal\",\"tooltip\",\"popover\",\"scrollspy\",\"tab\",\"affix\"],\"configFilePath\":\"/Users/adsi02/Documents/Practice/convert-to-characters/node_modules/bootstrap-loader/.bootstraprc-3-default\",\"bootstrapPath\":\"/Users/adsi02/Documents/Practice/convert-to-characters/node_modules/bootstrap-sass\",\"bootstrapRelPath\":\"../bootstrap-sass\"}!./no-op.js", function() {
-			var newContent = require("!!../css-loader/index.js!../resolve-url-loader/index.js!../sass-loader/lib/loader.js?sourceMap!./lib/bootstrap.styles.loader.js?{\"bootstrapVersion\":3,\"useCustomIconFontPath\":false,\"extractStyles\":false,\"styleLoaders\":[\"style\",\"css\",\"sass\"],\"styles\":[\"mixins\",\"normalize\",\"print\",\"glyphicons\",\"scaffolding\",\"type\",\"code\",\"grid\",\"tables\",\"forms\",\"buttons\",\"component-animations\",\"dropdowns\",\"button-groups\",\"input-groups\",\"navs\",\"navbar\",\"breadcrumbs\",\"pagination\",\"pager\",\"labels\",\"badges\",\"jumbotron\",\"thumbnails\",\"alerts\",\"progress-bars\",\"media\",\"list-group\",\"panels\",\"wells\",\"responsive-embed\",\"close\",\"modals\",\"tooltip\",\"popovers\",\"carousel\",\"utilities\",\"responsive-utilities\"],\"scripts\":[\"transition\",\"alert\",\"button\",\"carousel\",\"collapse\",\"dropdown\",\"modal\",\"tooltip\",\"popover\",\"scrollspy\",\"tab\",\"affix\"],\"configFilePath\":\"/Users/adsi02/Documents/Practice/convert-to-characters/node_modules/bootstrap-loader/.bootstraprc-3-default\",\"bootstrapPath\":\"/Users/adsi02/Documents/Practice/convert-to-characters/node_modules/bootstrap-sass\",\"bootstrapRelPath\":\"../bootstrap-sass\"}!./no-op.js");
+		module.hot.accept("!!../css-loader/index.js!../resolve-url-loader/index.js!../sass-loader/lib/loader.js?sourceMap!./lib/bootstrap.styles.loader.js?{\"bootstrapVersion\":3,\"useCustomIconFontPath\":false,\"extractStyles\":false,\"styleLoaders\":[\"style\",\"css\",\"sass\"],\"styles\":[\"mixins\",\"normalize\",\"print\",\"glyphicons\",\"scaffolding\",\"type\",\"code\",\"grid\",\"tables\",\"forms\",\"buttons\",\"component-animations\",\"dropdowns\",\"button-groups\",\"input-groups\",\"navs\",\"navbar\",\"breadcrumbs\",\"pagination\",\"pager\",\"labels\",\"badges\",\"jumbotron\",\"thumbnails\",\"alerts\",\"progress-bars\",\"media\",\"list-group\",\"panels\",\"wells\",\"responsive-embed\",\"close\",\"modals\",\"tooltip\",\"popovers\",\"carousel\",\"utilities\",\"responsive-utilities\"],\"scripts\":[\"transition\",\"alert\",\"button\",\"carousel\",\"collapse\",\"dropdown\",\"modal\",\"tooltip\",\"popover\",\"scrollspy\",\"tab\",\"affix\"],\"configFilePath\":\"/Users/adsi04/Desktop/Python/MyCode/voice-translation/node_modules/bootstrap-loader/.bootstraprc-3-default\",\"bootstrapPath\":\"/Users/adsi04/Desktop/Python/MyCode/voice-translation/node_modules/bootstrap-sass\",\"bootstrapRelPath\":\"../bootstrap-sass\"}!./no-op.js", function() {
+			var newContent = require("!!../css-loader/index.js!../resolve-url-loader/index.js!../sass-loader/lib/loader.js?sourceMap!./lib/bootstrap.styles.loader.js?{\"bootstrapVersion\":3,\"useCustomIconFontPath\":false,\"extractStyles\":false,\"styleLoaders\":[\"style\",\"css\",\"sass\"],\"styles\":[\"mixins\",\"normalize\",\"print\",\"glyphicons\",\"scaffolding\",\"type\",\"code\",\"grid\",\"tables\",\"forms\",\"buttons\",\"component-animations\",\"dropdowns\",\"button-groups\",\"input-groups\",\"navs\",\"navbar\",\"breadcrumbs\",\"pagination\",\"pager\",\"labels\",\"badges\",\"jumbotron\",\"thumbnails\",\"alerts\",\"progress-bars\",\"media\",\"list-group\",\"panels\",\"wells\",\"responsive-embed\",\"close\",\"modals\",\"tooltip\",\"popovers\",\"carousel\",\"utilities\",\"responsive-utilities\"],\"scripts\":[\"transition\",\"alert\",\"button\",\"carousel\",\"collapse\",\"dropdown\",\"modal\",\"tooltip\",\"popover\",\"scrollspy\",\"tab\",\"affix\"],\"configFilePath\":\"/Users/adsi04/Desktop/Python/MyCode/voice-translation/node_modules/bootstrap-loader/.bootstraprc-3-default\",\"bootstrapPath\":\"/Users/adsi04/Desktop/Python/MyCode/voice-translation/node_modules/bootstrap-sass\",\"bootstrapRelPath\":\"../bootstrap-sass\"}!./no-op.js");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -13785,12 +13785,6 @@ module.exports = "data:application/font-woff2;base64,d09GMgABAAAAAEZsAA8AAAAAsVw
 
 /***/ }),
 /* 29 */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABiUlEQVQ4jZWTu04CQRRAzywLqMFgBLHQKJWNQU2MiRUJtY1fsEhDIxWJhRTwA1QkJpboH/gB1hLcTq0sVhJ5qBQiEEWBsVAJLAvqTSaTe+fck5nJjADIg6bAPuDjb/Eo4WgLTkUONBWygDBTNrcbZWqKj3LZSiIl7CkqxKyaPeEwaw8PBIpFlo6PrQRCQEzoYAB+8+r60xOq19vLbwIB3q6vzdidMuqQ/c0AqsdjyY0UWIbN9rtg4+UFXzw+BDoWF9lst3EFg+MFwm5HnZ2lU6sN1GWn8zW/v48XNHM5PJrGYyaD7HYBeD47YzoUotNo8Hp1NcCrZkEpmWTl/JyZ3V1KqRQAk6urzEWjFBMJus3mYIMOhg6yf9zu7MhWoSB/ol2vy/vDQ2nmdDBGvgOH30/AMACoZrMUIhEzAqPegTo/j31hoZfbXC4cy8sIp3OIFTrkga0e7HazXq0i1KHroZJOUzw46C9digvQ7HBi3oEyMTEk+KhUkK1WL+9CWAB8S/71ndtwtA2nnxjcjt0q9VzNAAAAAElFTkSuQmCC"
-
-/***/ }),
-/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(3);
