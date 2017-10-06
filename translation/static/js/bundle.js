@@ -10387,7 +10387,11 @@ $(document).ready(function () {
     currentApi = event.target.value;
   });
   $("#input").on("keyup", function (event) {
+<<<<<<< HEAD
     $("#translate-given, #sendMessage").prop("disabled", $.trim($("#input").val()).length == 0);
+=======
+    $("#translate-given, #sendMessage").prop("disabled", $("#input").val().length == 0);
+>>>>>>> d472dda2c738c6fbf72410ce7e16bdf655e5787d
   });
 
   function trimAndLowerCaseText(text) {

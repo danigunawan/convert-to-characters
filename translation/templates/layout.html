@@ -12,13 +12,29 @@
   <script src="//code.jquery.com/jquery-1.11.1.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+  <script>
+    $(function(){
+      if ($.cookie("realtime-chat-nickname")) {
+        $(".logged-in.indicator").text("Logged in as: "+$.cookie("realtime-chat-nickname"))
+      }
+      $(".logout-link").click(function(e){
+        $.removeCookie("realtime-chat-nickname");
+        window.location = "/";
+      })
+    })
+  </script>
 {% endblock %}
 {% block body %}
   <div class="navbar navbar-inverse navbar-fixed-top">
-    <div class=navbar-header>
-      <div class=navbar-brand>
-        Translation App
+    <div class=container-fluid>
+      <div class=navbar-header>
+        <div class=navbar-brand>Translation App</div>
       </div>
+      <ul class="nav navbar-nav navbar-right">
+        <p class="navbar-text logged-in indicator"></p>
+        <li><a href="#" class="logout-link">Logout</a></li>
+      </ul>
     </div>
   </div>
   <div class=container>
