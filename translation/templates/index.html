@@ -13,6 +13,7 @@
     });
 
     socket.on("message", function (message) {
+        counter+=1;
         refreshMessages(message);
     });
 
@@ -62,7 +63,6 @@
             socket.emit('message', {data: {message: message, untranslatedMessage: untranslatedMessage, author: author, createDate: moment().format()}});
             $("#input").val("");
             $container.animate({ scrollTop: $container[0].scrollHeight }, "slow");
-            counter+=1;
             $("#translate-given, #sendMessage").prop("disabled", true)
         }
     })
