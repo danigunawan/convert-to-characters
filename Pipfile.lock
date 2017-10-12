@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "bad2626fe9d21c60afe5a91dbf5e1aa55c015b8ff68fef9b5097bb0e19dceae4"
+            "sha256": "f8a3a0078e825925893e554815b0f49d9fa1b39b98767053d0b3359248b6c2c5"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -119,10 +119,10 @@
         },
         "flask-sqlalchemy": {
             "hashes": [
-                "sha256:f01a46c84f10904f9f6168701100601640eb718e286b5add3026e033b9dfb23f",
-                "sha256:ab879cf88d30f2961dd9b4d709dcd31a25e0306855324c7d9a74fca6ad6ef8c3"
+                "sha256:3bc0fac969dd8c0ace01b32060f0c729565293302f0c4269beed154b46bec50b",
+                "sha256:5971b9852b5888655f11db634e87725a9031e170f37c0ce7851cf83497f56e53"
             ],
-            "version": "==2.3.1"
+            "version": "==2.3.2"
         },
         "flask-webpack": {
             "hashes": [
@@ -254,6 +254,12 @@
             ],
             "version": "==1.11.0"
         },
+        "speechrecognition": {
+            "hashes": [
+                "sha256:fe4f5785e54e4b07852f00128f6219817cec7237c57194cf73608cbea327f7ad"
+            ],
+            "version": "==3.7.1"
+        },
         "sqlalchemy": {
             "hashes": [
                 "sha256:f1191e29e35b6fe1aef7175a09b1707ebb7bd08d0b17cb0feada76c49e5a2d1e"
@@ -262,9 +268,9 @@
         },
         "sqlalchemy-utils": {
             "hashes": [
-                "sha256:e651f046de2d76233640f703eb318e50a7255be0173f3302ed1082bd3824f0af"
+                "sha256:7ee1d0e6002cc8202be1cf840b866f76a41a10a9ea946e82f942199100d80433"
             ],
-            "version": "==0.32.17"
+            "version": "==0.32.18"
         },
         "urllib3": {
             "hashes": [
@@ -291,6 +297,13 @@
                 "sha256:e3a50330a48355b4b325dcc30047fb643af044ea56bc9a58c3bd638db3c69e88"
             ],
             "version": "==0.3.5"
+        },
+        "youtube-dl": {
+            "hashes": [
+                "sha256:ccd2144a3f26cd39831bc1ba398c914a70d9624cf9a69c17733be47b0fdad0c6",
+                "sha256:f08f7a3a839afa6557434884f001aec9fd948f800223f424997372a4619ba2e0"
+            ],
+            "version": "==2017.10.12"
         }
     },
     "develop": {}

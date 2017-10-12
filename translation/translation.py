@@ -8,6 +8,12 @@ from setup_app import create_app
 from flask_socketio import SocketIO, emit, join_room
 import pdb
 
+import speech_recognition as sr
+import argparse
+import subprocess
+import sys
+import re
+
 app = create_app()
 socketio = SocketIO(app)
 
@@ -18,6 +24,42 @@ def index():
     translators = [("Google", "google_translate"), ("Yandex", "yandex_translate")]
 
     return render_template("index.html", languages=OrderedDict(languages), recognitions=OrderedDict(recognitions), translators=OrderedDict(translators))
+
+@app.route("/youtube")
+def youtube():
+    return render_template("youtube.html")
+
+@app.route("/transcribe", methods=["GET"])
+def transcribe():
+    youtube_url = request.args.get("url")
+    file_name   = download_video(youtube_url)
+    transcription = { "transcript": read_video(file_name) }
+
+    return jsonify(transcription)
+
+def download_video(url):
+    FNULL = open(os.devnull, 'w')
+    ydl = subprocess.Popen('youtube-dl {url} -o "youtube_audio.%(ext)s" '
+                           '--audio-format wav --extract-audio'.format(url=url), stdout=FNULL, shell=True,
+                           stderr=subprocess.STDOUT)
+    print "Downloading youtube video..."
+    ydl.wait()
+    print "Download complete!\n"
+    return open("youtube_audio.wav")
+
+def read_video(file_name):
+    print 'Processing youtube video...'
+    try:
+        r = sr.Recognizer()
+        with sr.AudioFile(file_name) as source:
+            audio = r.record(source)
+
+        output = r.recognize_wit(audio, "AY4J4V2G2MNKE2PUNP7ACEL5CTKPUTKI")
+    except IOError as exc:
+        output = 'Unable to find the audio file.'
+    except sr.UnknownValueError:
+        output = 'Error reading audio'
+    return output
 
 @app.route("/translate", methods=["POST"])
 def translate():

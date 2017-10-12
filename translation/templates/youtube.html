@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<script>
+  $(function(){
+    $("#youtube-url").on("keyup", function(event){
+      $("#transcribeYoutube").prop("disabled", ($.trim($("#youtube-url").val()).length == 0))
+    })
+
+    $("#transcribeYoutube").prop("disabled", "true")
+    $("#transcribeYoutube").click(function(e){
+      youtube_url = $("#youtube-url").val()
+      if (youtube_url.length > 0) {
+        $.ajax({
+          type: "GET",
+          url: "/transcribe",
+          data: { url: youtube_url },
+          dataType: "json",
+          beforeSend: function() {
+            $("#output.transcript-container").html("<i class='fa fa-circle-o-notch fa-spin'></i> Transcribing audio... (this takes a long time depending on video)")
+            $("#transcribeYoutube").prop("disabled", "true")
+          },
+          success: function(data){
+            $("#output.transcript-container").html(data["transcript"])
+            $("#transcribeYoutube").prop("disabled", "false")
+          }
+        })
+      }
+    })
+  })
+</script>
+
+<div class=row>
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="Youtube URL" id="youtube-url" autofocus/>
+    <span class="input-group-btn">
+      <button class="btn btn-info" type="button" id="transcribeYoutube">Transcribe <span class="fa fa-video-camera"></span></button>
+    </span>
+  </div>
+</div>
+
+<div class=row>
+  <div class="col-md-11">
+    <h3><i class="fa  fa-file-text" aria-hidden="true"></i> Youtube Transcript</h3>
+    <p class=transcript-container id=output>
+      <em>Transcript goes here...</em>
+    </p>
+  </div>
+</div>
+{% endblock %}
