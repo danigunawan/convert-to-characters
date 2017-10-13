@@ -13,6 +13,7 @@ import argparse
 import subprocess
 import sys
 import re
+import time
 
 app = create_app()
 socketio = SocketIO(app)
@@ -37,20 +38,21 @@ def transcribe():
     if pattern.match(youtube_url):
         file_name   = download_video(youtube_url)
         transcription = { "transcript": read_video(file_name) }
-        os.remove("youtube_audio.wav")
+        os.remove(file_name.name)
         return jsonify(transcription)
     else:
         return jsonify({"Error": "Must be youtube url"}), 500
 
 def download_video(url):
     FNULL = open(os.devnull, 'w')
-    ydl = subprocess.Popen('youtube-dl {url} -o "youtube_audio.%(ext)s" '
-                           '--audio-format wav --extract-audio'.format(url=url), stdout=FNULL, shell=True,
+    filename = "youtube_audio-%d" % time.time()
+    ydl = subprocess.Popen('youtube-dl {url} -o "{filename}.%(ext)s" '
+                           '--audio-format wav --extract-audio'.format(url=url,filename=filename), stdout=FNULL, shell=True,
                            stderr=subprocess.STDOUT)
     print "Downloading youtube video..."
     ydl.wait()
     print "Download complete!\n"
-    return open("youtube_audio.wav")
+    return open(filename+".wav")
 
 def read_video(file_name):
     print 'Processing youtube video...'

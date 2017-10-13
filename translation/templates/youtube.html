@@ -15,6 +15,7 @@
     $("#transcribeYoutube").prop("disabled", "true")
     $("#transcribeYoutube").click(function(e){
       youtube_url = $("#youtube-url").val()
+      parsed_url  = new URL(youtube_url)
       if (youtube_url.length > 0) {
         $.ajax({
           type: "GET",
@@ -22,8 +23,11 @@
           data: { url: youtube_url },
           dataType: "json",
           beforeSend: function() {
-            $("#output.transcript-container").html("<i class='fa fa-circle-o-notch fa-spin'></i> Transcribing audio... (this takes a long time depending on video)")
+            yt_id = parsed_url.searchParams.get("v")
+            $("#output.transcript-container").html("<div class='text-center'><i class='fa fa-circle-o-notch fa-spin fa-3x'></i><br /> Transcribing audio... (this takes a long time depending on video)</div>")
             $("#transcribeYoutube").prop("disabled", "true")
+
+            $("#videoContainer").html('<iframe width="560" height="315" src="https://www.youtube.com/embed/'+yt_id+'" frameborder="0" allowfullscreen></iframe>')
           },
           error: function(jqXHR, textStatus, errorThrown){
             $("#output.transcript-container").html("<i class='fa fa-exclamation-triangle'></i> " + textStatus + ": " + errorThrown + " " + JSON.parse(jqXHR.responseText).Error)
@@ -53,6 +57,11 @@
 </div>
 
 <div class=row>
+  <div class="col-md-11 text-center" id="videoContainer">
+  </div>
+</div>
+
+<div class=row>
   <div class="col-md-11">
     <h3><i class="fa  fa-file-text" aria-hidden="true"></i> Youtube Transcript</h3>
     <p class=transcript-container id=output>
@@ -60,4 +69,5 @@
     </p>
   </div>
 </div>
+
 {% endblock %}
