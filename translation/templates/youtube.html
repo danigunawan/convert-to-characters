@@ -4,6 +4,10 @@
 
 <script>
   $(function(){
+    if (Notification.permission !== "denied") {
+      Notification.requestPermission(function (permission) {});
+    }
+
     $("#youtube-url").on("keyup", function(event){
       $("#transcribeYoutube").prop("disabled", ($.trim($("#youtube-url").val()).length == 0))
     })
@@ -21,9 +25,17 @@
             $("#output.transcript-container").html("<i class='fa fa-circle-o-notch fa-spin'></i> Transcribing audio... (this takes a long time depending on video)")
             $("#transcribeYoutube").prop("disabled", "true")
           },
+          error: function(jqXHR, textStatus, errorThrown){
+            $("#output.transcript-container").html("<i class='fa fa-exclamation-triangle'></i> " + textStatus + ": " + errorThrown + " " + JSON.parse(jqXHR.responseText).Error)
+            $("#transcribeYoutube").prop("disabled", "false")
+          },
           success: function(data){
             $("#output.transcript-container").html(data["transcript"])
             $("#transcribeYoutube").prop("disabled", "false")
+
+            if (Notification.permission === "granted") {
+              var notification = new Notification("Transcript Complete!");
+            }
           }
         })
       }

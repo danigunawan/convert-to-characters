@@ -31,11 +31,16 @@ def youtube():
 
 @app.route("/transcribe", methods=["GET"])
 def transcribe():
+    pattern     = re.compile("^(https?\:\/\/)?((www\.)?youtube\.com|youtu\.?be)\/.+$")
     youtube_url = request.args.get("url")
-    file_name   = download_video(youtube_url)
-    transcription = { "transcript": read_video(file_name) }
 
-    return jsonify(transcription)
+    if pattern.match(youtube_url):
+        file_name   = download_video(youtube_url)
+        transcription = { "transcript": read_video(file_name) }
+        os.remove("youtube_audio.wav")
+        return jsonify(transcription)
+    else:
+        return jsonify({"Error": "Must be youtube url"}), 500
 
 def download_video(url):
     FNULL = open(os.devnull, 'w')
@@ -54,7 +59,8 @@ def read_video(file_name):
         with sr.AudioFile(file_name) as source:
             audio = r.record(source)
 
-        output = r.recognize_wit(audio, "AY4J4V2G2MNKE2PUNP7ACEL5CTKPUTKI")
+        # output = r.recognize_wit(audio, "AY4J4V2G2MNKE2PUNP7ACEL5CTKPUTKI")
+        output = r.recognize_sphinx(audio)
     except IOError as exc:
         output = 'Unable to find the audio file.'
     except sr.UnknownValueError:

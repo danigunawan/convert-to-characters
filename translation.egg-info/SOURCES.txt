@@ -25,3 +25,4 @@ translation/templates/layout.html
 translation/templates/login.html
 translation/templates/macros.jinja
 translation/templates/translations.html
+translation/templates/youtube.html
